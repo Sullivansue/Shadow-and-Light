@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using Runtime.PlayerState;
 using UnityEngine;
 
@@ -23,6 +24,7 @@ namespace Runtime
         
         #region 人物攻击
         public bool isHoldingSword { get; set; }
+        public GameObject target { get; set; }
         [field:SerializeField]public GameObject swordPrefab;
         #endregion
 
@@ -43,7 +45,7 @@ namespace Runtime
 
         private void Update()
         {
-            //Debug.Log(stateMachine.currentState);
+            //Debug.Log(target);
             stateMachine.currentState.UpdateState();
         }
     }

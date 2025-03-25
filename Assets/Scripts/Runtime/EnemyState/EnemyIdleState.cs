@@ -1,11 +1,14 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using HighlightPlus;
 
 namespace Runtime.EnemyState
 {
     public class EnemyIdleState : EenemyState
     {
         private Animator anim;
+        private HighlightTrigger mouseTrigger;
+        
         public EnemyIdleState(Enemy enemy, EnemyStateMachine stateMachine) : base(enemy, stateMachine)
         {
         }
@@ -13,6 +16,7 @@ namespace Runtime.EnemyState
         public override void EnterState()
         {
             anim = _enemy.transform.GetChild(0).GetComponent<Animator>();
+            mouseTrigger = _enemy.GetComponent<HighlightTrigger>();
             
             // 不同时机进入不同动画
             if (_enemy.isFirstTimeIdle == 0)

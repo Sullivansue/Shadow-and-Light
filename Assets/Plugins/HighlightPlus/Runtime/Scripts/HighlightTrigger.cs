@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace HighlightPlus {
-
     public enum TriggerMode {
         ColliderEventsOnlyOnThisObject = 0,
         RaycastOnThisObjectAndChildren = 1,
@@ -21,8 +20,10 @@ namespace HighlightPlus {
     [RequireComponent(typeof(HighlightEffect))]
     [ExecuteInEditMode]
     [HelpURL("https://kronnect.com/guides/highlight-plus-introduction/")]
-    public class HighlightTrigger : MonoBehaviour {
+    public class HighlightTrigger : MonoBehaviour
+    {
 
+        public bool isSelected = false;
         [Tooltip("Enables highlight when pointer is over this object.")]
         public bool highlightOnHover = true;
         [Tooltip("Used to trigger automatic highlighting including children objects.")]
@@ -345,7 +346,18 @@ namespace HighlightPlus {
                     return;
                 }
                 Highlight(true);
+                SelectedTarget(true);
             }
+        }
+
+        public void SelectedTarget(bool select)
+        {
+            isSelected = select;
+        }
+
+        public bool IsSelected()
+        {
+            return isSelected;
         }
 
         void OnMouseEnter() {
@@ -359,6 +371,7 @@ namespace HighlightPlus {
             if (isActiveAndEnabled && triggerMode == TriggerMode.ColliderEventsOnlyOnThisObject) {
                 if (!CanInteract()) return;
                 Highlight(false);
+                SelectedTarget(false);
             }
         }
 

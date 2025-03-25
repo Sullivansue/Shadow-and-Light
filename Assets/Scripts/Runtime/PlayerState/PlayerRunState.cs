@@ -45,7 +45,8 @@ namespace Runtime.PlayerState
 
         private void CheckForAttack()
         {
-            if (Input.GetMouseButtonDown(0) && _player.isHoldingSword)
+            if (Input.GetMouseButtonDown(0) && _player.isHoldingSword 
+                                            && _player.target != null)
             {
                 _player.stateMachine.ChangeState(_player.AttackState);
                 anim.Play("SwordSlash");
@@ -61,7 +62,6 @@ namespace Runtime.PlayerState
             
             Quaternion targetRotation = Quaternion.LookRotation(dir);
             Vector3 rotate = targetRotation.eulerAngles;
-//            Debug.Log(targetRotation);
                
             rotateObject.transform.DORotate(rotate, _player.rotateSpeed)
                 .SetEase(Ease.InOutBounce);

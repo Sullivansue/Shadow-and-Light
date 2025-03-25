@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
+using HighlightPlus;
 
 namespace Runtime.PlayerState
 {
@@ -8,6 +9,7 @@ namespace Runtime.PlayerState
     {
         private Animator anim;
         private GameObject rotateObject;
+        private HighlightTrigger mouseTrigger;
         
         public PlayerIdleState(Player player, StateMachine stateMachine) : base(player, stateMachine)
         {
@@ -17,7 +19,14 @@ namespace Runtime.PlayerState
         {
             rotateObject = GameObject.Find("Player").transform.GetChild(0).gameObject;
             anim = rotateObject.GetComponent<Animator>();
-            anim.CrossFade("Idle", 0.1f);
+            if (!_player.isHoldingSword)
+            {
+                anim.CrossFade("Idle", 0.1f);
+            }
+            else
+            {
+                anim.Play("SwordIdle");
+            }
         }
 
         public override void UpdateState()
@@ -46,7 +55,8 @@ namespace Runtime.PlayerState
                 //_player.swordPrefab.SetActive(false);
             }
 
-            if (Input.GetMouseButtonDown(0) && _player.isHoldingSword)
+            if (Input.GetMouseButtonDown(0) && _player.isHoldingSword 
+                                            && _player.target != null)
             {
                 _player.stateMachine.ChangeState(_player.AttackState);
             }

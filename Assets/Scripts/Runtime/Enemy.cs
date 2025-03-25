@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using UnityEngine;
 using Runtime.EnemyState;
 
@@ -12,6 +13,7 @@ namespace Runtime
         public EnemyWalkState  RunState { get; set; }
         public EnemyAttackState  AttackState { get; set; }
         public EnemyHittedState  HittedState { get; set; }
+        public EnemyDeadState   DeadState { get; set; }
         #endregion
         
         #region 怪物等待
@@ -20,8 +22,16 @@ namespace Runtime
         #endregion
 
         #region 怪物受击
-        public bool isHitted = false;
-        public bool isHitRightThere = false;
+        public bool isHitted {get; set;}
+        public bool isHitRightThere {get; set;}
+        #endregion
+
+        #region 反馈效果
+
+        [field: SerializeField] public MMF_Player hitPlayer;
+        [field: SerializeField] public MMF_Player deathPlayer;
+        
+
         #endregion
         
 
@@ -33,6 +43,7 @@ namespace Runtime
             RunState = new EnemyWalkState(this, stateMachine);
             AttackState = new EnemyAttackState(this, stateMachine);
             HittedState = new EnemyHittedState(this, stateMachine);
+            DeadState = new EnemyDeadState(this, stateMachine);
         }
         
         private void Start()
