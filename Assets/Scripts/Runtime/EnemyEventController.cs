@@ -12,5 +12,11 @@ namespace Runtime
         {
             animator.Play("Anim_Idle");
         }
+
+        public void FinishedHitted()
+        {
+            _enemy.isHitted = false;
+            _enemy.stateMachine.ChangeState(_enemy.IdleState);
+        }
     }
 }

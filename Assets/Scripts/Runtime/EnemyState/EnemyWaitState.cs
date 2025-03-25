@@ -13,7 +13,7 @@ namespace Runtime.EnemyState
         public override void EnterState()
         {
             player = GameObject.Find("Player");
-            anim = _enemy.GetComponent<Animator>();
+            anim = _enemy.transform.GetChild(0).GetComponent<Animator>();
             anim.Play("Anim_Wait");
         }
 
@@ -25,6 +25,12 @@ namespace Runtime.EnemyState
             {
                 _enemy.stateMachine.ChangeState(_enemy.IdleState);
             }
+        }
+
+
+        public override void ExitState()
+        {
+            anim.Play("Anim_Rise");
         }
     }
 }

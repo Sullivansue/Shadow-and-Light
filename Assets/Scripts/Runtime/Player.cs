@@ -18,6 +18,7 @@ namespace Runtime
         [field:SerializeField]public float runAccelerationDuration;
         [field:SerializeField]public float runSpeed;
         [field:SerializeField]public float rotateSpeed;
+        public float originSpeed;
         #endregion
         
         #region 人物攻击
@@ -36,6 +37,8 @@ namespace Runtime
         private void Start()
         {
             stateMachine.Initialize(IdleState);
+            originSpeed = runSpeed;
+            
         }
 
         private void Update()

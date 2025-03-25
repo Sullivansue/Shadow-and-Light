@@ -25,13 +25,13 @@ namespace Runtime.PlayerState
             // 基本移动
             bool isBasicInput = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)
                 || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S);
-            if (isBasicInput && !_player.isHoldingSword)
+            if (isBasicInput)
             {
                 _player.stateMachine.ChangeState(_player.RunState);
             }
 
             // 拿出剑
-            if (Input.GetKey(KeyCode.E))
+            if (Input.GetKey(KeyCode.E) && !_player.isHoldingSword)
             {
                 _player.isHoldingSword = true;
                 _player.swordPrefab.SetActive(true);
@@ -39,11 +39,16 @@ namespace Runtime.PlayerState
             }
 
             // 收剑
-            if (Input.GetKey(KeyCode.Q))
+            if (Input.GetKey(KeyCode.Q) && _player.isHoldingSword)
             {
                 _player.isHoldingSword = false;
                 anim.Play("SheathBack");
                 //_player.swordPrefab.SetActive(false);
+            }
+
+            if (Input.GetMouseButtonDown(0) && _player.isHoldingSword)
+            {
+                _player.stateMachine.ChangeState(_player.AttackState);
             }
         }
         

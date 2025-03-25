@@ -18,17 +18,12 @@ namespace Runtime.PlayerState
             _player.isHoldingSword = true;
             rotateObject = GameObject.Find("Player").transform.GetChild(0).gameObject;
             anim = rotateObject.GetComponent<Animator>();
-            anim.Play("SheathOut");
+            anim.Play("SwordSlash");
         }
 
         public override void UpdateState()
         {
-            bool isInput = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)
-                                                   || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S);
-            if (isInput)
-            {
-                _player.stateMachine.ChangeState(_player.RunState);
-            }
+            
         }
         
         

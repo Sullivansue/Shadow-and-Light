@@ -40,8 +40,17 @@ namespace Runtime.PlayerState
         {
             HandleMovement();
             CheckForIdle();
+            CheckForAttack();
         }
-        
+
+        private void CheckForAttack()
+        {
+            if (Input.GetMouseButtonDown(0) && _player.isHoldingSword)
+            {
+                _player.stateMachine.ChangeState(_player.AttackState);
+                anim.Play("SwordSlash");
+            }
+        }
         
         private void HandleMovement()
         {
@@ -56,8 +65,15 @@ namespace Runtime.PlayerState
                
             rotateObject.transform.DORotate(rotate, _player.rotateSpeed)
                 .SetEase(Ease.InOutBounce);
-                
-                
+
+            if (_player.isHoldingSword)
+            {
+                _player.runSpeed = 0.6f * _player.originSpeed;
+            }
+            else
+            {
+                _player.runSpeed = _player.originSpeed;
+            }
             playerObject.transform.position += 
                 dir * _player.runSpeed * Time.deltaTime;
         }
