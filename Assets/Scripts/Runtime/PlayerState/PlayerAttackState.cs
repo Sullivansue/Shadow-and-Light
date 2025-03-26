@@ -41,9 +41,9 @@ namespace Runtime.PlayerState
         {
             
         }
-        
-        
 
-        
+        public override void ExitState()
+        {
+        }
     }
 }

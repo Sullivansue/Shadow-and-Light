@@ -50,7 +50,7 @@ namespace Runtime.PlayerState
             // 收剑
             if (Input.GetKey(KeyCode.Q) && _player.isHoldingSword)
             {
-                _player.isHoldingSword = false;
+                
                 anim.Play("SheathBack");
                 //_player.swordPrefab.SetActive(false);
             }
@@ -61,9 +61,11 @@ namespace Runtime.PlayerState
                 _player.stateMachine.ChangeState(_player.AttackState);
             }
         }
-        
-        
 
-        
+
+        public override void ExitState()
+        {
+            _player.isFinishedSheathBack = false;
+        }
     }
 }

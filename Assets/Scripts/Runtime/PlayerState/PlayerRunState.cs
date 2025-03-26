@@ -54,7 +54,7 @@ namespace Runtime.PlayerState
         }
         
         private void HandleMovement()
-        {
+        { 
             float horiInput = Input.GetAxisRaw("Horizontal");
             float vertiInput = Input.GetAxisRaw("Vertical");
             

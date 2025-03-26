@@ -18,12 +18,21 @@ namespace Runtime
         // 拿出剑结束
         public void SheathOutEndEvent()
         {
+            
             animator.CrossFade("SwordIdle", 0.2f);
         }
         
         // 收回剑
+        public void SheathBackStartEvent()
+        {
+            _player.isStartedSheathBack = true;
+            _player.isFinishedSheathBack = false;
+        }  
         public void SheathBackEndEvent()
         {
+            _player.isHoldingSword = false;
+            _player.isStartedSheathBack = false;
+            _player.isFinishedSheathBack = true;
             animator.CrossFade("Idle", 0.2f);
             swordPrefab.SetActive(false);
         }

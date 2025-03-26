@@ -9,11 +9,15 @@ namespace Runtime
     {
         private Animator animator;
         private Enemy _enemy;
+        private Player _player;
         private MMF_Player deathPlayer;
+        private GameObject actualEnemy;
 
         private void Start()
         {
             _enemy = transform.parent.gameObject.GetComponent<Enemy>();
+            _player = GameObject.Find("Player").GetComponent<Player>();
+            actualEnemy = _enemy.transform.GetChild(0).gameObject;
             animator = GetComponent<Animator>();
             deathPlayer = _enemy.deathPlayer;
         }
@@ -27,22 +31,19 @@ namespace Runtime
         {
             _enemy.isHitted = false;
             _enemy.isHitRightThere = false;
-            _enemy.stateMachine.ChangeState(_enemy.IdleState);
+            _enemy.isFinishedHit = true;
         }
 
-        public void FinishedDeath()
+        
+        public void AttackRightThere()
         {
-            //StartCoroutine(DeathAfterDestroy());
-            deathPlayer.PlayFeedbacks();
+            //_enemy.isAttackRightThere = true;
+            _player.isHitRightThere = true;
         }
 
-        IEnumerator DeathAfterDestroy()
+        public void FinishedAttackOne()
         {
-            deathPlayer.PlayFeedbacks();
-
-            yield return new WaitForSeconds(1.5f);
-            
-            Destroy(_enemy.gameObject);
+            _enemy.stateMachine.ChangeState(_enemy.AttackState);
         }
     }
 }

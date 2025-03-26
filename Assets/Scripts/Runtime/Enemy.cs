@@ -10,7 +10,7 @@ namespace Runtime
         public EnemyStateMachine stateMachine { get; set; }
         public EnemyIdleState  IdleState { get; set; }
         public EnemyWaitState  WaitState { get; set; }
-        public EnemyWalkState  RunState { get; set; }
+        public EnemyChaseState  ChaseState { get; set; }
         public EnemyAttackState  AttackState { get; set; }
         public EnemyHittedState  HittedState { get; set; }
         public EnemyDeadState   DeadState { get; set; }
@@ -18,12 +18,22 @@ namespace Runtime
         
         #region 怪物等待
         [field: SerializeField]public float detectionRadius = 1.5f;
-        public int isFirstTimeIdle = 0;
+        [HideInInspector]public int isFirstTimeIdle = 0;
         #endregion
 
         #region 怪物受击
         public bool isHitted {get; set;}
+        public bool isFinishedHit {get; set;}
+        public int attackCount {get; set;}
         public bool isHitRightThere {get; set;}
+        [field: SerializeField]public AnimationCurve hitBackCurve;
+        [field: SerializeField]public float hitBackDuration;
+        #endregion
+        
+        
+        #region 怪物攻击
+        public int attackStage { get; set; }
+        [field:SerializeField]public float chaseSpeed { get; set; }
         #endregion
 
         #region 反馈效果
@@ -33,6 +43,9 @@ namespace Runtime
         
 
         #endregion
+
+        public GameObject player {get; set;}
+        public float distance {get; set;}
         
 
         private void Awake()
@@ -40,7 +53,7 @@ namespace Runtime
             stateMachine = new EnemyStateMachine();
             IdleState = new EnemyIdleState(this, stateMachine);
             WaitState = new EnemyWaitState(this, stateMachine);
-            RunState = new EnemyWalkState(this, stateMachine);
+            ChaseState = new EnemyChaseState(this, stateMachine);
             AttackState = new EnemyAttackState(this, stateMachine);
             HittedState = new EnemyHittedState(this, stateMachine);
             DeadState = new EnemyDeadState(this, stateMachine);
@@ -49,10 +62,12 @@ namespace Runtime
         private void Start()
         {
             stateMachine.Initialize(WaitState);
+            player = GameObject.Find("Player");
         }
 
         private void Update()
         {
+            distance = Vector3.Distance(player.transform.position, transform.position);
             stateMachine.currentState.UpdateState();
         }
     }
