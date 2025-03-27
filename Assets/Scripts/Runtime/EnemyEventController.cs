@@ -12,6 +12,7 @@ namespace Runtime
         private Player _player;
         private MMF_Player deathPlayer;
         private GameObject actualEnemy;
+        private EnemyRaycastHit raycastHit;
 
         private void Start()
         {
@@ -20,6 +21,7 @@ namespace Runtime
             actualEnemy = _enemy.transform.GetChild(0).gameObject;
             animator = GetComponent<Animator>();
             deathPlayer = _enemy.deathPlayer;
+            raycastHit = _enemy.gameObject.GetComponentInChildren<EnemyRaycastHit>();
         }
 
         public void FinishedRise()
@@ -38,7 +40,8 @@ namespace Runtime
         public void AttackRightThere()
         {
             //_enemy.isAttackRightThere = true;
-            _player.isHitRightThere = true;
+            //_player.isHitRightThere = true;
+            raycastHit.CheckForHit();
         }
 
         public void FinishedAttackOne()

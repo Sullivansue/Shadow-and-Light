@@ -12,6 +12,8 @@ namespace Runtime
         public PlayerRunState  RunState { get; set; }
         public PlayerAttackState  AttackState { get; set; }
         public PlayerHittedState  HittedState { get; set; }
+        public PlayerDeadState  DeadState { get; set; }
+        public PlayerGatherState GatherState { get; set; }
         #endregion
         
         #region 人物移动
@@ -29,11 +31,20 @@ namespace Runtime
         public bool isHoldingSword { get; set; }
         public GameObject target { get; set; }
         [field:SerializeField]public GameObject swordPrefab;
+        [field: SerializeField] public MMF_Player gatherPlayer {get; set;}
+        [field:SerializeField] public ParticleSystem magicCircle {get; set;}
+        [field:SerializeField] public int gatherValue { get; set; }
+        [field:SerializeField] public int gatherTotalValue { get; set; }
         #endregion
         
         #region 人物受击
         [field: SerializeField]public AnimationCurve hitBackCurve { get; set; }
+        [field: SerializeField]public float hitBackDuration { get; set; }
+        [field: SerializeField]public MMF_Player hitPlayer { get; set; }
         public bool isHitRightThere { get; set; }
+        public bool isHit { get; set; }
+        public GameObject hitByWho { get; set; }
+        public int hitCount { get; set; }
         #endregion
 
         private void Awake()
@@ -43,6 +54,8 @@ namespace Runtime
             RunState = new PlayerRunState(this, stateMachine);
             AttackState = new PlayerAttackState(this, stateMachine);
             HittedState = new PlayerHittedState(this, stateMachine);
+            DeadState = new PlayerDeadState(this, stateMachine);
+            GatherState = new PlayerGatherState(this, stateMachine);
         }
 
         private void Start()
@@ -50,6 +63,7 @@ namespace Runtime
             stateMachine.Initialize(IdleState);
             originSpeed = runSpeed;
             isFinishedSheathBack = true;
+            hitCount = 0;
             
         }
 

@@ -40,6 +40,7 @@ namespace Runtime
         // 攻击结束
         public void AttackFinished()
         {
+            _enemy.isHitRightThere = false;
             _player.stateMachine.ChangeState(_player.IdleState) ;
         }
         
@@ -47,6 +48,18 @@ namespace Runtime
         public void HitRightThere()
         {
             _enemy.isHitRightThere = true;
+        }
+        
+        // 被打结束
+        public void HitFinished()
+        {
+            _player.stateMachine.ChangeState(_player.IdleState);
+        }
+        
+        // 聚气结束
+        public void GatherFinished()
+        {
+            _player.stateMachine.ChangeState(_player.IdleState);
         }
         
     }

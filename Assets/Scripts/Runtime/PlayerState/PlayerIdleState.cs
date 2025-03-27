@@ -55,10 +55,24 @@ namespace Runtime.PlayerState
                 //_player.swordPrefab.SetActive(false);
             }
 
+            // 人物攻击
             if (Input.GetMouseButtonDown(0) && _player.isHoldingSword 
                                             && _player.target != null)
             {
                 _player.stateMachine.ChangeState(_player.AttackState);
+            }
+
+            // 人物受击
+            if (_player.isHit && _player.isHitRightThere)
+            {
+                _player.stateMachine.ChangeState(_player.HittedState);
+            }
+            
+            // 人物法阵
+            if (Input.GetKey(KeyCode.Space) && _player.isHoldingSword
+                && _player.gatherTotalValue > 0)
+            {
+                _player.stateMachine.ChangeState(_player.GatherState);
             }
         }
 

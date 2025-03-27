@@ -26,10 +26,10 @@ namespace Runtime.EnemyState
         public override void UpdateState()
         {
             
-            Debug.Log($"距离为：{_enemy.distance}");
+            /*Debug.Log($"距离为：{_enemy.distance}");
             Debug.Log($"player：{playerPrefab.transform.position}");
             Debug.Log($"enemy：{enemyPrefab.transform.position}");
-            Debug.Log($"攻击阶段:{_enemy.attackStage}");
+            Debug.Log($"攻击阶段:{_enemy.attackStage}");*/
             if (_enemy.distance > 35f)
             {
                 //EnemyChase();
