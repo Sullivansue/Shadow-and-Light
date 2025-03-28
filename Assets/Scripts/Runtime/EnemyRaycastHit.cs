@@ -22,6 +22,7 @@ namespace Runtime
         private void Start()
         {
             _player = GameObject.Find("Player").GetComponent<Player>();
+            
         }
 
 

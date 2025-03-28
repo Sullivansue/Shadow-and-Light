@@ -96,6 +96,12 @@ namespace Runtime.EnemyState
                     _enemy.attackStage = 2;
                     _enemy.stateMachine.ChangeState(_enemy.AttackState);
                 }
+                
+                // 踩到法阵里灼烧
+                if (_enemy.isInCircle)
+                {
+                    // 灼烧逻辑
+                }
             }
             
             

@@ -26,6 +26,7 @@ namespace Runtime
         public bool isFinishedHit {get; set;}
         public int attackCount {get; set;}
         public bool isHitRightThere {get; set;}
+        public bool isInCircle {get; set;}
         [field: SerializeField]public AnimationCurve hitBackCurve;
         [field: SerializeField]public float hitBackDuration;
         #endregion

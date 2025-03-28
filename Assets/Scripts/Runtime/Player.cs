@@ -32,7 +32,6 @@ namespace Runtime
         public GameObject target { get; set; }
         [field:SerializeField]public GameObject swordPrefab;
         [field: SerializeField] public MMF_Player gatherPlayer {get; set;}
-        [field:SerializeField] public ParticleSystem magicCircle {get; set;}
         [field:SerializeField] public int gatherValue { get; set; }
         [field:SerializeField] public int gatherTotalValue { get; set; }
         #endregion

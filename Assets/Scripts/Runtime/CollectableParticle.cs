@@ -1,38 +1,38 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Runtime
 {
-    [RequireComponent(typeof(SphereCollider), typeof(Rigidbody))]
     public class CollectableParticle : MonoBehaviour
     {
         [Header("射线设置")]
-        [SerializeField] private float checkInterval = 0.1f; // 检测间隔
-        [SerializeField] private float pickupDistance = 2f;  // 拾取距离
-        [SerializeField] private LayerMask playerLayer;      // 玩家层级
-        [SerializeField] private int raysPerFrame = 8;      // 每帧发射射线数量
+        [SerializeField] protected float checkInterval = 0.1f; // 检测间隔
+        [SerializeField] protected float pickupDistance = 2f;  // 拾取距离
+        [SerializeField] protected LayerMask playerLayer;      // 玩家层级
+        [SerializeField] protected int raysPerFrame = 8;      // 每帧发射射线数量
 
         private Transform playerTransform;
-        private float lastCheckTime;
+        private Bar bar;
+        private bool isFirstAdd = true;
 
-        private void Start()
+        [SerializeField]private int particleAmount;
+
+        public virtual void Start()
         {
-            playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-            lastCheckTime = Time.time;
+            playerTransform = GameObject.Find("Player").transform;
+            bar = GameObject.Find("Canvas").transform.GetComponentInChildren<Bar>();
         }
 
-        private void Update()
+        public virtual void Update()
         {
-            if (Time.time - lastCheckTime > checkInterval)
-            {
-                CheckPlayerInRange();
-                lastCheckTime = Time.time;
-            }
+            
+            CheckPlayerInRange();
 
             // 保持原有的漂浮和旋转逻辑
             UpdateFloatAnimation();
         }
 
-        private void CheckPlayerInRange()
+        protected void CheckPlayerInRange()
         {
             Vector3 toPlayer = playerTransform.position - transform.position;
             float distance = toPlayer.magnitude;
@@ -64,7 +64,7 @@ namespace Runtime
             }
         }
 
-        private bool IsValidPlayer(Collider col)
+        protected virtual bool IsValidPlayer(Collider col)
         {
             return col.CompareTag("Player") && 
                    col is CapsuleCollider &&
@@ -77,27 +77,23 @@ namespace Runtime
             // [原有代码保持不变]
         }
 
-        private void OnCollected()
+        protected virtual void OnCollected()
         {
             Debug.Log("粒子被射线拾取！");
             // 执行收集逻辑
-            Destroy(gameObject);
-            // 或使用对象池：ParticlePool.Instance.ReturnToPool(gameObject);
-        }
-        
-        // 在粒子周围绘制球形辅助线
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(transform.position, pickupDistance);
-    
-            // 绘制主要射线方向
-            if (Application.isPlaying && playerTransform != null)
+            if (isFirstAdd)
             {
-                Gizmos.color = Color.red;
-                Gizmos.DrawLine(transform.position, 
-                    transform.position + (playerTransform.position - transform.position).normalized * pickupDistance);
+                bar.Change(particleAmount);
+                isFirstAdd = false;
             }
+            
+            Destroy(gameObject);
+            //StartCoroutine(DestroyAfterBarChange());
         }
+
+        /*IEnumerator DestroyAfterBarChange()
+        {
+            
+        }*/
     }
 }
