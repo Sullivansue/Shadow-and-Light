@@ -1,22 +1,52 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Runtime
 {
     public class ParticleSystemManager : MonoBehaviour
     {
-        public ParticleSystem magicCircle;
+        public GameObject magicCircle;
+        public GameObject greatSword;
+        public float magidCircleLifetime;
+        public float greatSwordLifetime;
+        
+        
         private GameObject playerPrefab;
+        private float timer;
+        private GameObject circleEffect;
+        private GameObject greatSwordEffect;
 
         private void Start()
         {
             playerPrefab = GameObject.Find("Player");
+            timer = 0f;
+        }
+
+        private void Update()
+        {
         }
 
         public void SpawnMagicCircle()
         {
-            ParticleSystem newEffect = Instantiate(magicCircle
-            , playerPrefab.transform.position, Quaternion.identity);
+            circleEffect = Instantiate(magicCircle
+                , playerPrefab.transform.position, Quaternion.identity);
+            StartCoroutine(CountParticleTime(magidCircleLifetime, circleEffect));
+        }
+
+        IEnumerator CountParticleTime(float seconds, GameObject effect)
+        {
+            yield return new WaitForSecondsRealtime(seconds);
+            Destroy(effect);
+            yield return null;
+        }
+
+
+        public void SpawnGreatSword()
+        {
+            greatSwordEffect = Instantiate(magicCircle
+                , playerPrefab.transform.position, Quaternion.identity);
+            StartCoroutine(CountParticleTime(magidCircleLifetime, greatSwordEffect));
         }
     }
 }

@@ -2,36 +2,45 @@ using UnityEngine;
 
 namespace Runtime
 {
-    public class MagicCircleRaycast : CollectableParticle
+    public class MagicCircleRaycast : MonoBehaviour
     {
         private Transform enemyTransform;
         private Enemy _enemy;
+        public float radius;
 
-        public override void Start()
+        public LayerMask playerLayer;
+
+        void Start()
         {
             enemyTransform = GameObject.Find("Enemy").transform;
             _enemy = enemyTransform.gameObject.GetComponent<Enemy>();
         }
 
-        public override void Update()
+        void Update()
         {
-            CheckPlayerInRange();
+            CheckRange();
         }
-
-
-        protected override bool IsValidPlayer(Collider col)
+        
+        void CheckRange()
         {
-            return col.CompareTag("Enemy") && 
-                   col is BoxCollider &&
-                   Vector3.Distance(transform.position, col.transform.position) <= pickupDistance;
+            Collider[] hits = Physics.OverlapSphere(transform.position, radius, playerLayer);
+    
+            foreach (var hit in hits)
+            {
+                if (hit.CompareTag("Enemy"))
+                {
+                    Debug.Log("石头人进入范围");
+                    // 执行逻辑
+                    _enemy.isInCircle = true;
+                    // 在Scene视图绘制命中射线
+                    Debug.DrawLine(transform.position, hit.transform.position, Color.red, 0.1f);
+                }
+                else
+                {
+                    _enemy.isInCircle = false;
+                }
+            }
         }
-
-        protected override void OnCollected()
-        {
-            Debug.Log("踩到法阵里了");
-            
-            
-            
-        }
+        
     }
 }

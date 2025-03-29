@@ -12,6 +12,7 @@ namespace Runtime
         [SerializeField] protected int raysPerFrame = 8;      // 每帧发射射线数量
 
         private Transform playerTransform;
+        protected Transform targetTransform;
         private Bar bar;
         private bool isFirstAdd = true;
 
@@ -20,6 +21,7 @@ namespace Runtime
         public virtual void Start()
         {
             playerTransform = GameObject.Find("Player").transform;
+            targetTransform = playerTransform;
             bar = GameObject.Find("Canvas").transform.GetComponentInChildren<Bar>();
         }
 
@@ -34,7 +36,7 @@ namespace Runtime
 
         protected void CheckPlayerInRange()
         {
-            Vector3 toPlayer = playerTransform.position - transform.position;
+            Vector3 toPlayer = targetTransform.position - transform.position;
             float distance = toPlayer.magnitude;
 
             if (distance > pickupDistance) return;

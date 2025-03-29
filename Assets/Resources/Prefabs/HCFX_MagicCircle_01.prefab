@@ -44687,7 +44687,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3207188452792097063}
-  - component: {fileID: 5922066774974119229}
+  - component: {fileID: 4373232776520106937}
   m_Layer: 0
   m_Name: colliderDetect
   m_TagString: Untagged
@@ -44704,13 +44704,13 @@ Transform:
   m_GameObject: {fileID: 6891235866529376622}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.46, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4124775738041080700}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5922066774974119229
+--- !u!114 &4373232776520106937
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44719,16 +44719,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6891235866529376622}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d8e770595364bbe9cb055472ec4f6c1, type: 3}
+  m_Script: {fileID: 11500000, guid: b417154905db464b84fd5633e00709ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkInterval: 0.1
-  pickupDistance: 2
+  radius: 10
   playerLayer:
     serializedVersion: 2
-    m_Bits: 0
-  raysPerFrame: 8
-  particleAmount: 0
+    m_Bits: 64
 --- !u!1 &8588420862074339326
 GameObject:
   m_ObjectHideFlags: 0

@@ -74,6 +74,12 @@ namespace Runtime.PlayerState
             {
                 _player.stateMachine.ChangeState(_player.GatherState);
             }
+            
+            // 人物蓄力斩
+            if (_player.isHoldingSword && Input.GetKey(KeyCode.Z))
+            {
+                _player.stateMachine.ChangeState(_player.ChargingState);
+            }
         }
 
 

@@ -14,6 +14,7 @@ namespace Runtime
         public PlayerHittedState  HittedState { get; set; }
         public PlayerDeadState  DeadState { get; set; }
         public PlayerGatherState GatherState { get; set; }
+        public PlayerChargingAttackState ChargingState { get; set; }
         #endregion
         
         #region 人物移动
@@ -32,6 +33,7 @@ namespace Runtime
         public GameObject target { get; set; }
         [field:SerializeField]public GameObject swordPrefab;
         [field: SerializeField] public MMF_Player gatherPlayer {get; set;}
+        [field: SerializeField] public MMF_Player chargingPlayer {get; set;}
         [field:SerializeField] public int gatherValue { get; set; }
         [field:SerializeField] public int gatherTotalValue { get; set; }
         #endregion
@@ -45,6 +47,8 @@ namespace Runtime
         public GameObject hitByWho { get; set; }
         public int hitCount { get; set; }
         #endregion
+        
+        public KeyboardInputHandler inputHandler { get; set; }
 
         private void Awake()
         {
@@ -55,6 +59,7 @@ namespace Runtime
             HittedState = new PlayerHittedState(this, stateMachine);
             DeadState = new PlayerDeadState(this, stateMachine);
             GatherState = new PlayerGatherState(this, stateMachine);
+            ChargingState = new PlayerChargingAttackState(this, stateMachine);
         }
 
         private void Start()
@@ -63,6 +68,7 @@ namespace Runtime
             originSpeed = runSpeed;
             isFinishedSheathBack = true;
             hitCount = 0;
+            inputHandler = GameObject.Find("InputHandler").GetComponent<KeyboardInputHandler>();
             
         }
 
