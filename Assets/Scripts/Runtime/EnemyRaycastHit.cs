@@ -60,7 +60,7 @@ namespace Runtime
             
             if (!hasHit)
             {
-                Debug.Log("Attack missed!");
+                //Debug.Log("Attack missed!");
             }
         }
 

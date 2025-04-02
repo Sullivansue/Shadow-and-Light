@@ -32,12 +32,14 @@ namespace Runtime
                     Debug.Log("石头人进入范围");
                     // 执行逻辑
                     _enemy.isInCircle = true;
+                    _enemy.isHitted = true;
                     // 在Scene视图绘制命中射线
                     Debug.DrawLine(transform.position, hit.transform.position, Color.red, 0.1f);
                 }
                 else
                 {
                     _enemy.isInCircle = false;
+                    _enemy.isHitted = false;
                 }
             }
         }

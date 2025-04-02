@@ -30,11 +30,13 @@ namespace Runtime
         
         #region 人物攻击
         public bool isHoldingSword { get; set; }
+        public bool isCharging { get; set; }
         public GameObject target { get; set; }
         [field:SerializeField]public GameObject swordPrefab;
         [field: SerializeField] public MMF_Player gatherPlayer {get; set;}
         [field: SerializeField] public MMF_Player chargingPlayer {get; set;}
         [field:SerializeField] public int gatherValue { get; set; }
+        [field:SerializeField] public int chargingValue { get; set; }
         [field:SerializeField] public int gatherTotalValue { get; set; }
         #endregion
         

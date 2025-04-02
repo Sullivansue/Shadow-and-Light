@@ -46,7 +46,27 @@ namespace Runtime
 
         public void FinishedAttackOne()
         {
-            _enemy.stateMachine.ChangeState(_enemy.AttackState);
+            if (_enemy.totalHP > 0)
+            {
+                _enemy.stateMachine.ChangeState(_enemy.AttackState);
+            }
+            
+        }
+
+        public void FinishedDeath()
+        {
+            StartCoroutine(FeedbackControl());
+            
+        }
+
+        IEnumerator FeedbackControl()
+        {
+            deathPlayer.PlayFeedbacks();
+            _enemy.transform.GetChild(0).gameObject.SetActive(false);
+            yield return new WaitForSeconds(1.5f);
+            Destroy(_enemy.gameObject);
+            
+            
         }
     }
 }

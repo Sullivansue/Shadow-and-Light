@@ -30,26 +30,43 @@ namespace Runtime.EnemyState
             Debug.Log($"player：{playerPrefab.transform.position}");
             Debug.Log($"enemy：{enemyPrefab.transform.position}");
             Debug.Log($"攻击阶段:{_enemy.attackStage}");*/
-            if (_enemy.distance > 35f)
+            
+            // 死了
+            if (_enemy.totalHP <= 0)
             {
-                //EnemyChase();
-                _enemy.stateMachine.ChangeState(_enemy.ChaseState);
-                // 后续的远程攻击
+                _enemy.stateMachine.ChangeState(_enemy.DeadState);
             }
             else
             {
-                if (_enemy.attackStage == 0)
+                if (_enemy.distance > 35f)
                 {
-                    _enemy.StartCoroutine(EnemyAttackOne());
+                    //EnemyChase();
+                    _enemy.stateMachine.ChangeState(_enemy.ChaseState);
+                    // 后续的远程攻击
+                }
+                else
+                {
+                    if (_enemy.attackStage == 0)
+                    {
+                        _enemy.StartCoroutine(EnemyAttackOne());
                     
-                } 
+                    } 
+                }
             }
+            
  
             // 被打了强行打断动作
             if (_enemy.isHitted && _enemy.isHitRightThere)
             {
                 _enemy.stateMachine.ChangeState(_enemy.HittedState);
             }
+
+            if (_enemy.isChargingHit && _enemy.isChargingActualHit)
+            {
+                _enemy.stateMachine.ChangeState(_enemy.HittedState);
+            }
+            
+            
         }
 
         IEnumerator EnemyAttackOne()

@@ -25,7 +25,7 @@ namespace Runtime.PlayerState
             }
             else
             {
-                anim.Play("SwordIdle");
+                anim.CrossFade("SwordIdle", 0.1f);
             }
         }
 
@@ -76,8 +76,10 @@ namespace Runtime.PlayerState
             }
             
             // 人物蓄力斩
-            if (_player.isHoldingSword && Input.GetKey(KeyCode.Z))
+            if (_player.isHoldingSword && Input.GetKey(KeyCode.Z) 
+                                       && _player.gatherTotalValue > 0)
             {
+                _player.isCharging = true;
                 _player.stateMachine.ChangeState(_player.ChargingState);
             }
         }

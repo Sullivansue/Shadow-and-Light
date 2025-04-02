@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ namespace Runtime.EnemyState
         private MMF_Player hitPlayer;
         private GameObject playerPrefab;
         private GameObject enemyPrefab;
+
+        private Bar bar;
         
         public EnemyHittedState(Enemy enemy, EnemyStateMachine stateMachine) : base(enemy, stateMachine)
         {
@@ -18,6 +21,11 @@ namespace Runtime.EnemyState
 
         public override void EnterState()
         {
+            bar = GameObject.Find("Canvas").transform.GetChild(1).GetComponent<Bar>();
+            // 普攻
+            bar.Change(-_enemy.hitCount);
+            _enemy.totalHP -= _enemy.hitCount;
+            
             playerPrefab = GameObject.Find("Player");
             enemyPrefab = _enemy.gameObject;
             anim = _enemy.transform.GetChild(0).gameObject.GetComponent<Animator>();
@@ -65,52 +73,57 @@ namespace Runtime.EnemyState
             }
 
         }
+        
+        
 
         public override void UpdateState()
         {
-            if (_enemy.isFinishedHit)
+            // 被打15下死
+            if (_enemy.totalHP <= 0)
             {
-                // 被打15下死
-                if (_enemy.attackCount == 15)
-                {
-                    _enemy.stateMachine.ChangeState(_enemy.DeadState);
-                }
+                _enemy.stateMachine.ChangeState(_enemy.DeadState);
+            }
+            else
+            {
+                _enemy.stateMachine.ChangeState(_enemy.IdleState);
+            }
             
-                //初阶
-                if (_enemy.attackCount < 5)
+            /*if (_enemy.isFinishedHit)
+            {
+                
+            
+                //初阶 光盾
+                if (_enemy.totalHP >= 50)
                 {
                     _enemy.attackStage = 0;
                     _enemy.stateMachine.ChangeState(_enemy.AttackState);
                 }
             
-                // 被打5下进入一阶
-                if (_enemy.attackCount >= 5 && _enemy.attackCount < 10)
+                // 进入二阶
+                if (_enemy.totalHP > 0 && _enemy.totalHP < 50)
                 {
                     _enemy.attackStage = 1;
                     _enemy.stateMachine.ChangeState(_enemy.AttackState);
                 }
-            
-                // 被打10下进入二阶
-                if (_enemy.attackCount >= 10 && _enemy.attackCount < 15)
-                {
-                    _enemy.attackStage = 2;
-                    _enemy.stateMachine.ChangeState(_enemy.AttackState);
-                }
                 
                 // 踩到法阵里灼烧
-                if (_enemy.isInCircle)
+                if (_enemy.isInCircle && _enemy.totalHP > 0)
                 {
                     // 灼烧逻辑
+                    _enemy.stateMachine.ChangeState(_enemy.BurnState);
                 }
-            }
+            }*/
             
             
         }
 
         public override void ExitState()
         {
-            _enemy.attackCount++;
+            Debug.Log(" Exit State");
             _enemy.isFinishedHit = false;
+            
+            _enemy.isChargingHit = false;
+            _enemy.isChargingActualHit = false;
             
         }
     }

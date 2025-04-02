@@ -41,6 +41,11 @@ namespace Runtime.EnemyState
             {
                 _enemy.stateMachine.ChangeState(_enemy.HittedState);
             }
+
+            if (_enemy.isChargingHit && _enemy.isChargingActualHit)
+            {
+                _enemy.stateMachine.ChangeState(_enemy.HittedState);
+            }
         }
     }
 }

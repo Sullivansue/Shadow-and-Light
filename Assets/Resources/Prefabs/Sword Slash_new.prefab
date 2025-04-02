@@ -24538,6 +24538,7 @@ GameObject:
   - component: {fileID: 8227788642100736600}
   - component: {fileID: 8001162486542290519}
   - component: {fileID: 4463829162706664365}
+  - component: {fileID: 4015426397075684609}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -28249,16 +28250,16 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 4
-    type: 1
+    type: 0
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
     multiplyColliderForceByParticleSpeed: 0
     multiplyColliderForceByCollisionAngle: 1
     m_Planes:
-    - {fileID: 8227788642100736600}
+    - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -28320,7 +28321,7 @@ ParticleSystem:
     m_Bounce:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -28425,7 +28426,7 @@ ParticleSystem:
         m_RotationOrder: 4
     minKillSpeed: 0
     maxKillSpeed: 10000
-    radiusScale: 1
+    radiusScale: 1.76
     collidesWith:
       serializedVersion: 2
       m_Bits: 64
@@ -28438,12 +28439,12 @@ ParticleSystem:
   TriggerModule:
     enabled: 1
     serializedVersion: 2
-    inside: 1
+    inside: 0
     outside: 0
-    enter: 0
+    enter: 2
     exit: 0
     colliderQueryMode: 0
-    radiusScale: 1
+    radiusScale: 1.41
     primitives:
     - {fileID: 0}
     - {fileID: 0}
@@ -29472,6 +29473,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &4015426397075684609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2775727084227457814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 932cee25bfa74ca68586dfae1234fecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3325686500827486675
 GameObject:
   m_ObjectHideFlags: 0
@@ -49116,7 +49129,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3106518447497692953
 Transform:
   m_ObjectHideFlags: 0

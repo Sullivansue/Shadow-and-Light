@@ -14,6 +14,7 @@ namespace Runtime
         public EnemyAttackState  AttackState { get; set; }
         public EnemyHittedState  HittedState { get; set; }
         public EnemyDeadState   DeadState { get; set; }
+        public EnemyBurnState   BurnState { get; set; }
         #endregion
         
         #region 怪物等待
@@ -22,13 +23,19 @@ namespace Runtime
         #endregion
 
         #region 怪物受击
-        public bool isHitted {get; set;}
+        public bool isHitted {get; set;}   // 普攻
+        [Header("普攻数值")]
+        [field: SerializeField] public int hitCount;
+        [Header("总血量")]
+        [field: SerializeField] public int totalHP;
+        public bool isChargingHit {get; set;}   // 蓄力斩
+        public bool isChargingActualHit {get; set;}
         public bool isFinishedHit {get; set;}
-        public int attackCount {get; set;}
         public bool isHitRightThere {get; set;}
         public bool isInCircle {get; set;}
         [field: SerializeField]public AnimationCurve hitBackCurve;
         [field: SerializeField]public float hitBackDuration;
+        [field: SerializeField]public ParticleSystem swordParticle;
         #endregion
         
         
@@ -58,6 +65,7 @@ namespace Runtime
             AttackState = new EnemyAttackState(this, stateMachine);
             HittedState = new EnemyHittedState(this, stateMachine);
             DeadState = new EnemyDeadState(this, stateMachine);
+            BurnState = new EnemyBurnState(this, stateMachine);
         }
         
         private void Start()

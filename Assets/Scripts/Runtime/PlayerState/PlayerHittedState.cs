@@ -73,6 +73,7 @@ namespace Runtime.PlayerState
 
         public override void ExitState()
         {
+            
             _player.isHit = false;
             _player.isHitRightThere = false;
         }
