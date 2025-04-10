@@ -13,6 +13,7 @@ namespace Runtime
         private MMF_Player deathPlayer;
         private GameObject actualEnemy;
         private EnemyRaycastHit raycastHit;
+        private MMF_Player spikePlayer;
 
         private void Start()
         {
@@ -22,6 +23,7 @@ namespace Runtime
             animator = GetComponent<Animator>();
             deathPlayer = _enemy.deathPlayer;
             raycastHit = _enemy.gameObject.GetComponentInChildren<EnemyRaycastHit>();
+            spikePlayer = _enemy.spikePlayer;
         }
 
         public void FinishedRise()
@@ -66,6 +68,23 @@ namespace Runtime
             yield return new WaitForSeconds(1.5f);
             Destroy(_enemy.gameObject);
             
+            
+        }
+
+        public void FinishedBurn()
+        {
+            _enemy.isFinishedBurn = true;
+            _enemy.stateMachine.ChangeState(_enemy.AttackState);
+        }
+
+        public void SpikeHitGround()
+        {
+            spikePlayer.PlayFeedbacks();
+        }
+        
+        public void FinishedSpike()
+        {
+            _enemy.isFinishedSpike = true;
             
         }
     }

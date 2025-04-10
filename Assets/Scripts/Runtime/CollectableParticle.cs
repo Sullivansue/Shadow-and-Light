@@ -15,14 +15,16 @@ namespace Runtime
         protected Transform targetTransform;
         private Bar bar;
         private bool isFirstAdd = true;
+        private Player _player;
 
         [SerializeField]private int particleAmount;
 
         public virtual void Start()
         {
+            _player = GameObject.Find("Player").GetComponent<Player>();
             playerTransform = GameObject.Find("Player").transform;
             targetTransform = playerTransform;
-            bar = GameObject.Find("Canvas").transform.GetComponentInChildren<Bar>();
+            bar = GameObject.FindGameObjectWithTag("PlayerPower").GetComponent<Bar>();
         }
 
         public virtual void Update()
@@ -83,9 +85,10 @@ namespace Runtime
         {
             Debug.Log("粒子被射线拾取！");
             // 执行收集逻辑
-            if (isFirstAdd)
+            if (isFirstAdd && _player.gatherTotalValue <= 100)
             {
                 bar.Change(particleAmount);
+                _player.gatherTotalValue += particleAmount;
                 isFirstAdd = false;
             }
             

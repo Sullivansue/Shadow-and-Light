@@ -23,9 +23,6 @@ namespace Runtime
             timer = 0f;
         }
 
-        private void Update()
-        {
-        }
 
         public void SpawnMagicCircle()
         {
@@ -41,12 +38,6 @@ namespace Runtime
             yield return null;
         }
 
-
-        public void SpawnGreatSword()
-        {
-            greatSwordEffect = Instantiate(magicCircle
-                , playerPrefab.transform.position, Quaternion.identity);
-            StartCoroutine(CountParticleTime(magidCircleLifetime, greatSwordEffect));
-        }
+        
     }
 }

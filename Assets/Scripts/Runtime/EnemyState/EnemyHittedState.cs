@@ -13,6 +13,7 @@ namespace Runtime.EnemyState
         private GameObject enemyPrefab;
 
         private Bar bar;
+        private Bar powerBar;
         
         public EnemyHittedState(Enemy enemy, EnemyStateMachine stateMachine) : base(enemy, stateMachine)
         {
@@ -21,9 +22,12 @@ namespace Runtime.EnemyState
 
         public override void EnterState()
         {
-            bar = GameObject.Find("Canvas").transform.GetChild(1).GetComponent<Bar>();
+            bar = GameObject.FindGameObjectWithTag("EnemyBlood").GetComponent<Bar>();
+            powerBar = GameObject.Find("Canvas").transform.GetChild(3).GetComponent<Bar>();
             // 普攻
             bar.Change(-_enemy.hitCount);
+            powerBar.Change(250);
+            _enemy.gatherValue += 250;
             _enemy.totalHP -= _enemy.hitCount;
             
             playerPrefab = GameObject.Find("Player");
@@ -78,48 +82,32 @@ namespace Runtime.EnemyState
 
         public override void UpdateState()
         {
-            // 被打15下死
-            if (_enemy.totalHP <= 0)
+            if (_enemy.isFinishedHit)
             {
-                _enemy.stateMachine.ChangeState(_enemy.DeadState);
-            }
-            else
-            {
-                _enemy.stateMachine.ChangeState(_enemy.IdleState);
-            }
-            
-            /*if (_enemy.isFinishedHit)
-            {
-                
-            
                 //初阶 光盾
-                if (_enemy.totalHP >= 50)
+                if (_enemy.totalHP >= 0)
                 {
                     _enemy.attackStage = 0;
                     _enemy.stateMachine.ChangeState(_enemy.AttackState);
                 }
             
                 // 进入二阶
-                if (_enemy.totalHP > 0 && _enemy.totalHP < 50)
+                /*else if (_enemy.totalHP > 0 && _enemy.totalHP < 50)
                 {
                     _enemy.attackStage = 1;
                     _enemy.stateMachine.ChangeState(_enemy.AttackState);
-                }
+                }*/
                 
-                // 踩到法阵里灼烧
-                if (_enemy.isInCircle && _enemy.totalHP > 0)
-                {
-                    // 灼烧逻辑
-                    _enemy.stateMachine.ChangeState(_enemy.BurnState);
-                }
-            }*/
+            
+                
+                
+            }
             
             
         }
 
         public override void ExitState()
         {
-            Debug.Log(" Exit State");
             _enemy.isFinishedHit = false;
             
             _enemy.isChargingHit = false;

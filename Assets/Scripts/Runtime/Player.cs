@@ -35,22 +35,33 @@ namespace Runtime
         [field:SerializeField]public GameObject swordPrefab;
         [field: SerializeField] public MMF_Player gatherPlayer {get; set;}
         [field: SerializeField] public MMF_Player chargingPlayer {get; set;}
-        [field:SerializeField] public int gatherValue { get; set; }
-        [field:SerializeField] public int chargingValue { get; set; }
-        [field:SerializeField] public int gatherTotalValue { get; set; }
+        
         #endregion
         
         #region 人物受击
         [field: SerializeField]public AnimationCurve hitBackCurve { get; set; }
         [field: SerializeField]public float hitBackDuration { get; set; }
         [field: SerializeField]public MMF_Player hitPlayer { get; set; }
+        //
+        //[field: SerializeField]public MMF_Player pushPlayer { get; set; }
         public bool isHitRightThere { get; set; }
         public bool isHit { get; set; }
+        public bool isHitBySpike { get; set; }
         public GameObject hitByWho { get; set; }
-        public int hitCount { get; set; }
+        
+        #endregion
+        
+        #region 人物数值
+        [field:SerializeField] public int gatherValue { get; set; } // 法阵耗蓝
+        [field:SerializeField] public int chargingValue { get; set; } // 蓄力耗蓝
+        [field:SerializeField] public int gatherTotalValue { get; set; } // 总蓝
+        [field: SerializeField]public int hitCount { get; set; } // 受击数值
+        [field: SerializeField]public int totalHP { get; set; } // 总血量
         #endregion
         
         public KeyboardInputHandler inputHandler { get; set; }
+        public Light light { get; set; }
+        public Bar bar { get; set; }
 
         private void Awake()
         {
@@ -66,18 +77,31 @@ namespace Runtime
 
         private void Start()
         {
+            // 初始蓝条0
             stateMachine.Initialize(IdleState);
             originSpeed = runSpeed;
             isFinishedSheathBack = true;
-            hitCount = 0;
             inputHandler = GameObject.Find("InputHandler").GetComponent<KeyboardInputHandler>();
+            
+            /*bar = GameObject.FindGameObjectWithTag("PlayerPower").GetComponent<Bar>();
+            bar.Change(-100);
+            gatherTotalValue -= 100;*/
             
         }
 
         private void Update()
         {
-            //Debug.Log(target);
             stateMachine.currentState.UpdateState();
+
+            light = GetComponentInChildren<Light>();
+            // 计算比例并设置范围
+            float ratio = gatherTotalValue / 100f;
+            light.range = Mathf.Lerp(0, 20, ratio);
+
+            if (totalHP <= 0)
+            {
+                stateMachine.ChangeState(DeadState);
+            }
         }
     }
 }

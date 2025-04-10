@@ -9,10 +9,21 @@ namespace Runtime
         public GameObject swordPrefab;
         private Player _player;
         public Enemy _enemy;
+        private Shield _shield;
 
         private void Start()
         {
             _player = GameObject.Find("Player").GetComponent<Player>();
+            
+        }
+
+        private void Update()
+        {
+            if (GameObject.FindGameObjectWithTag("Shield"))
+            {
+                _shield = GameObject.FindGameObjectWithTag("Shield").GetComponent<Shield>();
+            }
+            
         }
 
         // 拿出剑结束
@@ -41,6 +52,7 @@ namespace Runtime
         public void AttackFinished()
         {
             _enemy.isHitRightThere = false;
+            _enemy.startAttack = false;
             _player.stateMachine.ChangeState(_player.IdleState) ;
         }
         
@@ -48,12 +60,14 @@ namespace Runtime
         public void HitRightThere()
         {
             _enemy.isHitRightThere = true;
+            _shield.isHitRightThere = true;
         }
         
         // 被打结束
         public void HitFinished()
         {
             _player.stateMachine.ChangeState(_player.IdleState);
+            _shield.isHitRightThere = false;
         }
         
         // 聚气结束

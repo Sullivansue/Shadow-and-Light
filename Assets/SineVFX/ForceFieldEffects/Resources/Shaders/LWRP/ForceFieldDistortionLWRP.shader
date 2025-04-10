@@ -279,7 +279,7 @@ Shader "SineVFX/ForceFieldAndShieldEffects/ForceFieldDistortionLWRP"
 			sampler2D _Noise01;
 			sampler2D _NoiseDistortion;
 			sampler2D _Noise02;
-			uniform float4 _CameraDepthTexture_TexelSize;
+//			uniform float4 _CameraDepthTexture_TexelSize;
 			sampler2D _MaskAppearRamp;
 			sampler2D _MaskAppearNoise;
 

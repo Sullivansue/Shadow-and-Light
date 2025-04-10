@@ -67,6 +67,10 @@ namespace Runtime.PlayerState
             {
                 _player.stateMachine.ChangeState(_player.HittedState);
             }
+            else if (_player.isHitBySpike)
+            {
+                _player.stateMachine.ChangeState(_player.HittedState);
+            }
             
             // 人物法阵
             if (Input.GetKey(KeyCode.Space) && _player.isHoldingSword

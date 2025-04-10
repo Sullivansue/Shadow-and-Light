@@ -25,6 +25,8 @@ namespace Runtime.EnemyState
             {
                 _enemy.stateMachine.ChangeState(_enemy.IdleState);
             }
+
+            
         }
 
 

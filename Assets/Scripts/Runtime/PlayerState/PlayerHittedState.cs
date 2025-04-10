@@ -10,6 +10,8 @@ namespace Runtime.PlayerState
         private GameObject enemyPrefab;
         private MMF_Player hitPlayer;
         private Animator animator;
+
+        private Bar bar;
         
         public PlayerHittedState(Player player, StateMachine stateMachine) : base(player, stateMachine)
         {
@@ -17,6 +19,11 @@ namespace Runtime.PlayerState
 
         public override void EnterState()
         {
+            bar = GameObject.FindGameObjectWithTag("PlayerBlood").GetComponent<Bar>();
+            bar.Change(-_player.hitCount);
+            _player.totalHP -= _player.hitCount;
+            
+            
             playerPrefab = _player.gameObject;
             enemyPrefab = _player.hitByWho;
             hitPlayer = _player.hitPlayer;
@@ -24,9 +31,8 @@ namespace Runtime.PlayerState
             animator = playerPrefab.GetComponentInChildren<Animator>();
             animator.Play("Player_Hit");
 
-            _player.hitCount++;
-            
-            _player.StartCoroutine(PlayerHittedAnim());
+            hitPlayer.PlayFeedbacks();
+            //_player.StartCoroutine(PlayerHittedAnim());
         }
 
         IEnumerator PlayerHittedAnim()
@@ -59,23 +65,23 @@ namespace Runtime.PlayerState
                 yield return null;
             }
             
-            //_player.stateMachine.ChangeState(_player.IdleState);
 
         }
 
         public override void UpdateState()
         {
-            if (_player.hitCount == 6)
+            /*if (_player.totalHP <= 0)
             {
                 _player.stateMachine.ChangeState(_player.DeadState);
-            }
+            }*/
         }
 
         public override void ExitState()
         {
-            
+            hitPlayer.StopAllCoroutines();
             _player.isHit = false;
             _player.isHitRightThere = false;
+            _player.isHitBySpike = false;
         }
     }
 }

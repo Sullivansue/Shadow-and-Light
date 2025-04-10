@@ -6,6 +6,13 @@ TagManager:
   tags:
   - Sword
   - Enemy
+  - EnemyHit
+  - Shield
+  - ShieldHit
+  - PlayerPower
+  - PlayerBlood
+  - EnemyPower
+  - EnemyBlood
   layers:
   - Default
   - TransparentFX

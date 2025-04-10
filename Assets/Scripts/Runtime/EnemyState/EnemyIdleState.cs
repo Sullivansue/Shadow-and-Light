@@ -8,6 +8,7 @@ namespace Runtime.EnemyState
     {
         private Animator anim;
         private HighlightTrigger mouseTrigger;
+        private GameObject shield;
         
         public EnemyIdleState(Enemy enemy, EnemyStateMachine stateMachine) : base(enemy, stateMachine)
         {
@@ -15,6 +16,7 @@ namespace Runtime.EnemyState
 
         public override void EnterState()
         {
+            shield = GameObject.FindGameObjectWithTag("Shield");
             anim = _enemy.transform.GetChild(0).GetComponent<Animator>();
             mouseTrigger = _enemy.GetComponent<HighlightTrigger>();
             
@@ -37,6 +39,10 @@ namespace Runtime.EnemyState
 
         public override void UpdateState()
         {
+            if (_enemy.startAttack && shield != null)
+            {
+                _enemy.stateMachine.ChangeState(_enemy.SpikeState);
+            }
             if (_enemy.isHitted && _enemy.isHitRightThere)
             {
                 _enemy.stateMachine.ChangeState(_enemy.HittedState);
@@ -46,6 +52,12 @@ namespace Runtime.EnemyState
             {
                 _enemy.stateMachine.ChangeState(_enemy.HittedState);
             }
+
+            if (_enemy.isInCircle)
+            {
+                _enemy.stateMachine.ChangeState(_enemy.BurnState);
+            }
+            
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Runtime.PlayerState
 
         public override void EnterState()
         {
-            bar = GameObject.Find("Canvas").transform.GetChild(0).GetComponent<Bar>();
+            bar = GameObject.FindGameObjectWithTag("PlayerPower").GetComponent<Bar>();
             bar.Change(-_player.chargingValue);
             _player.gatherTotalValue -= _player.chargingValue;
             

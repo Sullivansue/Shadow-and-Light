@@ -16,7 +16,7 @@ namespace Runtime.PlayerState
 
         public override void EnterState()
         {
-            bar = GameObject.Find("Canvas").transform.GetChild(0).GetComponent<Bar>();
+            bar = GameObject.FindGameObjectWithTag("PlayerPower").GetComponent<Bar>();
             // 生成一次法阵消耗定量蓝
             bar.Change(-_player.gatherValue);
             _player.gatherTotalValue -= _player.gatherValue;

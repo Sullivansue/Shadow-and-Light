@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Runtime
@@ -18,7 +19,11 @@ namespace Runtime
 
         void Update()
         {
-            CheckRange();
+            if (_enemy.stateMachine.currentState != _enemy.BurnState)
+            {
+                CheckRange();
+            }
+            
         }
         
         void CheckRange()
@@ -32,16 +37,21 @@ namespace Runtime
                     Debug.Log("石头人进入范围");
                     // 执行逻辑
                     _enemy.isInCircle = true;
-                    _enemy.isHitted = true;
                     // 在Scene视图绘制命中射线
                     Debug.DrawLine(transform.position, hit.transform.position, Color.red, 0.1f);
+                    StartCoroutine(WaitForTime());
                 }
                 else
                 {
                     _enemy.isInCircle = false;
-                    _enemy.isHitted = false;
                 }
             }
+        }
+
+        IEnumerator WaitForTime()
+        {
+            yield return new WaitForSeconds(0.1f);
+            Destroy(this.gameObject);
         }
         
     }

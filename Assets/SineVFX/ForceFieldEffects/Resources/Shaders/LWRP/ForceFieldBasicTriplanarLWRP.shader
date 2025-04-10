@@ -295,7 +295,7 @@ Shader "SineVFX/ForceFieldAndShieldEffects/ForceFieldBasicTriplanarLWRP"
 			#endif
 			CBUFFER_END
 			sampler2D _Ramp;
-			uniform float4 _CameraDepthTexture_TexelSize;
+			//uniform float4 _CameraDepthTexture_TexelSize;
 			sampler2D _Noise01;
 			sampler2D _NoiseDistortion;
 			sampler2D _Noise02;
@@ -756,7 +756,7 @@ Shader "SineVFX/ForceFieldAndShieldEffects/ForceFieldBasicTriplanarLWRP"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
-			uniform float4 _CameraDepthTexture_TexelSize;
+			//uniform float4 _CameraDepthTexture_TexelSize;
 			sampler2D _Noise01;
 			sampler2D _NoiseDistortion;
 			sampler2D _Noise02;
